@@ -52,9 +52,11 @@ public class WeixinController {
 
     @GetMapping("/auth")
     public void auth(@RequestParam("code") String code){
+        //第一步：用户同意授权，获取code
         log.info("******进入auth方法******");
         log.info("code={}",code);
 
+        //第二步：通过code换取网页授权access_token
         String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx6fe29d4e72522720&secret=aac72b616386b2247a948efceb2f145e&code="+code+"&grant_type=authorization_code";
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(url,String.class);
