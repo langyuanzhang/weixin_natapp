@@ -36,3 +36,38 @@ P.S. _购买隧道选择免费的就行，本地端口要根据项目运行时�
 
 ![appID](images/huidiao.png)
 
+
+#### 测试
+编写请求代码
+```java
+/**
+ * Author zly
+ * Description:微信控制器
+ * Date: 2019/4/3 17:02
+ */
+@Controller
+@RequestMapping("/weixin")
+@Slf4j
+public class WeixinController {
+
+    @GetMapping("/auth")
+    public void auth(@RequestParam("code") String code){
+        log.info("******进入auth方法******");
+        log.info("code={}",code);
+
+        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx6fe29d4e72522720&secret=aac72b616386b2247a948efceb2f145e&code="+code+"&grant_type=authorization_code";
+        RestTemplate restTemplate = new RestTemplate();
+        String response = restTemplate.getForObject(url,String.class);
+        log.info("response={}",response);
+    }
+}
+```
+
+在微信上打开以下网址
+https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6fe29d4e72522720&redirect_uri=http://ib4jcm.natappfree.cc/weixin/auth&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect
+
+在代码出打断点，并查看控制台
+
+![appID](images/auth.png)
+
+![appID](images/debug.png)
